@@ -238,7 +238,7 @@ async function send(text) {
     const result = await sdk.runAgent({
       ehr: run.ehr, session: run.session, model, dataPolicy: "synthetic",
       prompt: text, messages: run.messages, conversationId: run.id,
-      maxSteps: 10, maxToolCalls: 20, maxOutputTokens: 2000,
+      maxSteps: 10, maxToolCalls: 20, maxOutputTokens: 4096,
       onEvent: onAgentEvent,
     });
     run.messages = result.messages;

@@ -71,7 +71,7 @@ func main() {
 	px := proxy.New(proxy.Config{
 		Upstream: env("MODEL_UPSTREAM", "https://openrouter.ai/api/v1"), APIKey: os.Getenv("OPENROUTER_API_KEY"), Model: model,
 		ExtraBody:   map[string]any{"provider": map[string]any{"data_collection": "deny", "zdr": true}},
-		MaxTokens:   2048, PerIPWindow: 40, PerIPDay: 300, GlobalDay: 4000, AllowedTools: tools,
+		MaxTokens:   4096, PerIPWindow: 40, PerIPDay: 300, GlobalDay: 4000, AllowedTools: tools,
 		TrustProxy: os.Getenv("TRUST_PROXY") == "1",
 	})
 
