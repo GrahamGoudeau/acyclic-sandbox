@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acyclic SDK sandbox</title>
+<meta name="description" content="Try an EHR agent against Epic, Oracle Health, athenahealth, MEDITECH and eClinicalWorks compatible mock APIs with synthetic patients. Open source, Apache-2.0.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><strong>Acyclic SDK</strong> <span class="muted">sandbox</span></div>
+  <nav class="vendors" id="vendors" aria-label="EHR vendor"></nav>
+  <div class="top-right">
+    <span class="badge" title="Every patient here is generated. Never paste real patient information.">Synthetic data only</span>
+    <a href="https://github.com/GrahamGoudeau/acyclic-sdk-js" target="_blank" rel="noopener">SDK</a>
+    <a href="https://github.com/GrahamGoudeau/acyclic-sandbox" target="_blank" rel="noopener">Source</a>
+  </div>
+</header>
+
+<div class="mobile-tabs" id="mobileTabs">
+  <button data-pane="chat" class="on">Chat</button><button data-pane="trace">Trace</button><button data-pane="side">Chart</button>
+</div>
+
+<main class="layout">
+  <section class="pane chat" id="pane-chat" aria-label="Chat">
+    <div class="pane-head">
+      <label>Patient <select id="patient"></select></label>
+      <button id="newRun" class="ghost">New chat</button>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div class="suggest" id="suggest"></div>
+    <form id="ask" class="ask">
+      <textarea id="prompt" rows="2" placeholder="Ask about this patient's chart" required></textarea>
+      <div class="ask-row">
+        <label class="check"><input type="checkbox" id="writes"> Allow writes (create_note)</label>
+        <button type="submit" id="send" class="primary">Send</button>
+      </div>
+    </form>
+    <details class="runs">
+      <summary>Past runs</summary>
+      <ul id="runs"></ul>
+    </details>
+  </section>
+
+  <section class="pane trace" id="pane-trace" aria-label="Trace">
+    <div class="pane-head">
+      <strong>Trace</strong>
+      <span class="muted" id="traceStats"></span>
+      <button id="share" class="ghost" disabled>Share run</button>
+    </div>
+    <div id="trace" class="trace-list"><p class="empty">Tool calls and the FHIR requests behind them show up here.</p></div>
+  </section>
+
+  <section class="pane side" id="pane-side" aria-label="Chart and telemetry">
+    <div class="pane-head tabs" id="sideTabs">
+      <button data-tab="chart" class="on">Chart</button>
+      <button data-tab="telemetry">Telemetry</button>
+      <button data-tab="code">Code</button>
+      <button data-tab="connect">Connect</button>
+    </div>
+    <div class="tab" id="tab-chart"></div>
+    <div class="tab" id="tab-telemetry" hidden>
+      <p class="muted small">What your logs would hold: spans, logs and audit records from the SDK's telemetry hook. No names, no query strings, no bodies.</p>
+      <pre id="telemetry" class="code"></pre>
+    </div>
+    <div class="tab" id="tab-code" hidden>
+      <div class="lang" id="codeLang"><button data-lang="js" class="on">JS</button><button data-lang="go">Go</button><button data-lang="rs">Rust</button><button data-lang="curl">curl</button></div>
+      <pre id="code" class="code"></pre>
+      <button class="ghost" id="copyCode">Copy</button>
+    </div>
+    <div class="tab" id="tab-connect" hidden></div>
+  </section>
+</main>
+
+<dialog id="approve">
+  <form method="dialog">
+    <h3>The agent wants to write to the chart</h3>
+    <p id="approveSummary"></p>
+    <pre id="approveBody" class="code small"></pre>
+    <div class="ask-row">
+      <button value="no" class="ghost">Decline</button>
+      <button value="yes" class="primary">Approve</button>
+    </div>
+  </form>
+</dialog>
+
+<footer class="foot muted small">
+  Mock APIs follow each vendor's public documentation. Not affiliated with or endorsed by Epic Systems, Oracle, athenahealth, MEDITECH or eClinicalWorks.
+  Model: DeepSeek via OpenRouter, for synthetic data only. Apache-2.0.
+</footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
