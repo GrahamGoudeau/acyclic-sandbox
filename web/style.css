@@ -115,3 +115,14 @@ dialog::backdrop { background: rgba(0,0,0,.35); }
 
 /* Flex columns must not squeeze their rows; they scroll instead. */
 .messages > *, .trace-list > * { flex-shrink: 0; }
+
+/* Phones: iOS zooms into any field under 16px and leaves the page zoomed,
+   which reads as side-scrolling. Keep fields at 16px, and never let a grid
+   column grow past the screen. */
+@media (max-width: 980px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  select, textarea, input { font-size: 16px; }
+  .pane-head select { max-width: 100%; }
+  .suggest button { white-space: normal; text-align: left; }
+  html, body { overflow-x: hidden; }
+}
